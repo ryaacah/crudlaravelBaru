@@ -14,19 +14,16 @@
         <form action="{{ url('/login') }}" method="POST">
             @csrf
 
-            <!-- Nama -->
             <div class="mb-4">
                 <label class="block text-gray-700">Nama</label>
                 <input type="text" name="nama" class="w-full p-2 border rounded" required>
             </div>
 
-            <!-- Kata Sandi -->
             <div class="mb-4">
-                <label class="block text-gray-700">Kata Sandi</label>
+                <label class="block text-gray-700">ID Staff</label>
                 <input type="password" name="password" class="w-full p-2 border rounded" required>
             </div>
 
-            <!-- Tombol Login -->
             <div class="text-center">
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Login</button>
             </div>
