@@ -2,23 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Staff extends Authenticatable
+class Staff extends Model
 {
-    use Notifiable;
-
+    use HasFactory;
+    
     protected $table = 'staff';
-    protected $primaryKey = 'id_staff'; // Pastikan ini primary key
-    public $timestamps = false; // Jika tabel tidak pakai timestamps
-
-    protected $fillable = ['nama', 'id_staff', 'jabatan'];
-
-    protected $hidden = ['id_staff']; // Supaya ID Staff tidak terbuka di response JSON
-
-    public function getAuthPassword()
-    {
-        return $this->id_staff; // Gunakan id_staff sebagai password
-    }
+    protected $primaryKey = 'id_staff';
+    public $incrementing = false; // Karena ID bukan auto-increment
+    protected $fillable = ['id_staff', 'nama_staff', 'jabatan'];
 }

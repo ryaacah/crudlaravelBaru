@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\AuthController;
 
+// Halaman utama
 Route::get('/', [PegawaiController::class, 'index'])->name('home');
 
 // CRUD Pegawai
@@ -18,7 +19,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Dashboard setelah login
+// Dashboard (hanya bisa diakses jika sudah login)
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware('auth');
+})->middleware('auth.staff');

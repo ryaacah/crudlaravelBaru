@@ -10,6 +10,17 @@
 
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
         <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+        @if (session('error'))
+            <div class="bg-red-500 text-white p-2 rounded mb-4 text-center">
+                {{ session('error') }}
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="bg-green-500 text-white p-2 rounded mb-4 text-center">
+                {{ session('success') }}
+            </div>
+        @endif
+
         
         <form action="{{ url('/login') }}" method="POST">
             @csrf

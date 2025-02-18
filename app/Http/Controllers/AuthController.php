@@ -3,36 +3,43 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Models\Staff;
 
 class AuthController extends Controller
 {
+    // Menampilkan form login
     public function showLoginForm()
     {
-        return view('auth.login'); // Pastikan file ini ada
+        return view('login');
     }
 
+    // Proses login
     public function login(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string',
-            'password' => 'required' // Password adalah id_staff
+            'nama' => 'required',
+            'password' => 'required'
         ]);
 
-        $staff = Staff::where('nama', $request->nama)->first();
+        // Cari staff berdasarkan nama dan ID Staff (password)
+        $staff = Staff::where('nama_staff', $request->nama)
+                      ->where('id_staff', $request->password)
+                      ->first();
 
-        if ($staff && $staff->id_staff == $request->password) {
-            Auth::login($staff);
-            return redirect()->intended('/dashboard');
+        if ($staff) {
+            // Simpan data login di session
+            session(['logged_in' => true, 'staff' => $staff]);
+            return redirect('/dashboard')->with('success', 'Login berhasil!');
+        } else {
+            return back()->with('error', 'Nama atau ID Staff salah!');
         }
-
-        return back()->withErrors(['password' => 'Nama atau ID Staff salah']);
     }
 
+    // Proses logout
     public function logout()
     {
-        Auth::logout();
-        return redirect('/login');
+        Session::flush();
+        return redirect('/login')->with('success', 'Anda telah logout.');
     }
 }
